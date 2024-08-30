@@ -59,21 +59,29 @@ class _QuizQuestionState extends State<QuizQuestion> {
     if (appState.isLastQuestion()) {
       buttonText = 'get result';
     }
-    columnChildren.add(Padding(
-        padding: EdgeInsets.only(top: 15.0),
-        child: OutlinedButton(
-          onPressed: !isOptionSelected() ? null : () {
-            appState.completeQuestion(_categoryScores);
-            appState.computeResult();
-            _isOptionSelected = false;
-          },
-          child: Text(buttonText),
-        )));
 
+    // TODO: add animation for progress bar
     return Column(children: [
       Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: columnChildren)
+          children: columnChildren),
+      Padding(
+          padding: EdgeInsets.only(top: 15.0),
+          child: OutlinedButton(
+            onPressed: !isOptionSelected()
+                ? null
+                : () {
+                    appState.completeQuestion(_categoryScores);
+                    appState.computeResult();
+                    _isOptionSelected = false;
+                  },
+            child: Text(buttonText),
+          )),
+      Container(
+          width: 180,
+          padding: EdgeInsets.only(top: 30.0),
+          child:
+              LinearProgressIndicator(value: appState.getProgressPercentage()))
     ]);
   }
 }

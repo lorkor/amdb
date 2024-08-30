@@ -38,10 +38,8 @@ class AppState extends ChangeNotifier {
     Category.amoeba: 0,
     Category.baby: 0
   };
-  double progressPercentage = 0;
 
   void resetResult() {
-    progressPercentage = 0;
     questionIndex = 0;
     results = {
       Category.mommy: 0,
@@ -70,6 +68,10 @@ class AppState extends ChangeNotifier {
     }
   }
 
+  double getProgressPercentage() {
+    return questionIndex / quizContent.length;
+  }
+
   void completeQuestion(Map<Category, double> resultScores) {
     for (MapEntry<Category, double> categoryScore in resultScores.entries) {
       double cumulativeCategoryScore = (results[categoryScore.key] != null)
@@ -78,7 +80,6 @@ class AppState extends ChangeNotifier {
       results[categoryScore.key] =
           cumulativeCategoryScore + categoryScore.value;
     }
-    progressPercentage += 100 / quizContent.length;
     questionIndex += 1;
     notifyListeners();
   }
