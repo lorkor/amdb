@@ -1,6 +1,4 @@
 import 'package:amdb/constants.dart';
-
-// TODO: create a constant file of actual quiz questions. eventually just do this in a config.
 class QuestionData {
   String questionText;
   List<MultipleChoiceSelection> selections;

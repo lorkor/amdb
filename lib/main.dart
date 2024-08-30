@@ -2,7 +2,7 @@ import 'package:amdb/constants.dart';
 import 'package:amdb/page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'dart:math';
+import 'package:amdb/question_data.dart';
 
 void main() {
   runApp(const AmdbApp());
@@ -21,34 +21,35 @@ class AmdbApp extends StatelessWidget {
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),
-        home: Page(),
+        home: AmdbPage(),
       ),
     );
   }
 }
 
 class AppState extends ChangeNotifier {
-  final _random = Random();
   String currentPageId = landingPageId;
+  int questionIndex = 0;
   late Category primary;
   late Category secondary;
-  var results = {
+  Map<Category, double> results = {
     Category.mommy: 0,
     Category.daddy: 0,
     Category.amoeba: 0,
     Category.baby: 0
   };
-  var progressPercentage = 0;
+  double progressPercentage = 0;
 
   void resetResult() {
     progressPercentage = 0;
-    currentPageId = landingPageId;
+    questionIndex = 0;
     results = {
       Category.mommy: 0,
       Category.daddy: 0,
       Category.amoeba: 0,
       Category.baby: 0
     };
+    currentPageId = landingPageId;
     notifyListeners();
   }
 
@@ -57,28 +58,49 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool isLastQuestion() {
+    return questionIndex == quizContent.length - 1;
+  }
+
   String getCurrentPageId() {
-    if (progressPercentage == 100) {
+    if (questionIndex == quizContent.length) {
       return resultPageId;
     } else {
       return currentPageId;
     }
   }
 
-  void completeQuestion(Category category) {
-    progressPercentage = 100;
-    if (results[category] != null) {
-      results[category] = (results[category])! + 1;
+  void completeQuestion(Map<Category, double> resultScores) {
+    for (MapEntry<Category, double> categoryScore in resultScores.entries) {
+      double cumulativeCategoryScore = (results[categoryScore.key] != null)
+          ? 0.0
+          : results[categoryScore.key]!;
+      results[categoryScore.key] =
+          cumulativeCategoryScore + categoryScore.value;
     }
+    progressPercentage += 100 / quizContent.length;
+    questionIndex += 1;
     notifyListeners();
   }
 
-  void computeResult() {
-    primary = quadrants[_random.nextInt(quadrants.length)];
-    secondary = quadrants[_random.nextInt(quadrants.length)];
-    while (secondary == primary) {
-      secondary = quadrants[_random.nextInt(quadrants.length)];
+  Category getCategoryWithMax(Category? ignoreCategory) {  
+    var maxValue = 0.0;
+    var bestCategory = Category.unknown;
+
+    for (MapEntry<Category, double> categoryResult in results.entries) {
+      var score = categoryResult.value;
+      var category = categoryResult.key;
+      if (score > maxValue && category != ignoreCategory) {
+        maxValue = score;
+        bestCategory = category;
+      }
     }
+    return bestCategory;
+  }
+
+  void computeResult() {
+    primary = getCategoryWithMax(null);
+    secondary = getCategoryWithMax(/*ignoreCategory=*/ primary);
     notifyListeners();
   }
 }
@@ -106,4 +128,3 @@ class LandingStaticContentContainer extends StatelessWidget {
     ]);
   }
 }
-

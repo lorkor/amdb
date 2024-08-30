@@ -2,6 +2,8 @@ import 'package:amdb/constants.dart';
 import 'package:amdb/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:amdb/question_data.dart';
+import 'package:amdb/question.dart';
 
 class QuizQuestion extends StatefulWidget {
   @override
@@ -9,12 +11,24 @@ class QuizQuestion extends StatefulWidget {
 }
 
 class _QuizQuestionState extends State<QuizQuestion> {
-  Category _category = Category.unknown;
+  Map<Category, double> _categoryScores = {};
+  bool _isOptionSelected = false;
 
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
     final theme = Theme.of(context);
+
+    QuestionData questionData = quizContent[appState.questionIndex];
+    return getQuizQuestionFromData(appState, theme, questionData);
+  }
+
+  bool isOptionSelected() {
+    return _isOptionSelected;
+  }
+
+  Column getQuizQuestionFromData(
+      AppState appState, ThemeData theme, QuestionData questionData) {
     final headerStyle = theme.textTheme.displaySmall!
         .copyWith(color: theme.colorScheme.primaryFixedDim);
     final questionStyle =
@@ -22,68 +36,44 @@ class _QuizQuestionState extends State<QuizQuestion> {
     final radioSelectionStyle =
         TextStyle(color: theme.colorScheme.onPrimaryFixedVariant, fontSize: 15);
 
-    // TODO: fill column children with contents of question data. create a static file of questions.
-    return Column(
-        children: [Column(
+    List<Widget> columnChildren = [Text("find your amdb", style: headerStyle)];
+    columnChildren.add(Padding(
+        padding: const EdgeInsets.only(top: 10.0),
+        child: Text(questionData.questionText, style: questionStyle)));
+
+    for (MultipleChoiceSelection selection in questionData.selections) {
+      columnChildren.add(RadioListTile<Map<Category, double>>(
+        title: Text(selection.selectionText, style: radioSelectionStyle),
+        value: selection.categoryScores,
+        groupValue: _categoryScores,
+        onChanged: (Map<Category, double>? value) {
+          setState(() {
+            _categoryScores = selection.categoryScores;
+            _isOptionSelected = true;
+          });
+        },
+      ));
+    }
+
+    String buttonText = 'next question';
+    if (appState.isLastQuestion()) {
+      buttonText = 'get result';
+    }
+    columnChildren.add(Padding(
+        padding: EdgeInsets.only(top: 15.0),
+        child: OutlinedButton(
+          onPressed: !isOptionSelected() ? null : () {
+            appState.completeQuestion(_categoryScores);
+            appState.computeResult();
+            _isOptionSelected = false;
+          },
+          child: Text(buttonText),
+        )));
+
+    return Column(children: [
+      Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-          Text("find your amdb", style: headerStyle),
-          Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Text('which best describes you?', style: questionStyle)),
-          RadioListTile<Category>(
-            title: Text('mommy', style: radioSelectionStyle),
-            value: Category.mommy,
-            groupValue: _category,
-            onChanged: (Category? value) {
-              setState(() {
-                _category = Category.mommy;
-              });
-            },
-          ),
-          RadioListTile<Category>(
-            title: Text('daddy', style: radioSelectionStyle),
-            value: Category.daddy,
-            groupValue: _category,
-            onChanged: (Category? value) {
-              setState(() {
-                _category = Category.daddy;
-              });
-            },
-          ),
-          RadioListTile<Category>(
-            title: Text('amoeba', style: radioSelectionStyle),
-            value: Category.amoeba,
-            groupValue: _category,
-            onChanged: (Category? value) {
-              setState(() {
-                _category = Category.amoeba;
-              });
-            },
-          ),
-          RadioListTile<Category>(
-            title: Text('baby', style: radioSelectionStyle),
-            value: Category.baby,
-            groupValue: _category,
-            onChanged: (Category? value) {
-              setState(() {
-                _category = Category.baby;
-              });
-            },
-          ),
-        ]),
-        Padding(
-              padding: EdgeInsets.only(top: 15.0),
-              child: OutlinedButton(
-                // TODO: make this only visible if last questions
-                // TODO: make this clickable only if radio button selected.
-                onPressed: () {
-                  appState.computeResult();
-                  appState.completeQuestion(_category);
-                },
-                child: Text('get result'),
-              )
-            )
-        ]);
+          children: columnChildren)
+    ]);
   }
 }

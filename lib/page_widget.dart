@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 /* Base page class that watches app state and renders appropriate root app page. */
-class Page extends StatefulWidget {
+class AmdbPage extends StatefulWidget {
   @override
-  State<Page> createState() => _PageState();
+  State<AmdbPage> createState() => _PageState();
 }
 
-class _PageState extends State<Page> {
+class _PageState extends State<AmdbPage> {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
@@ -33,7 +33,6 @@ class _PageState extends State<Page> {
         children: [
           LandingStaticContentContainer(),
           Padding(
-            // TODO: pull out common button styling
             padding: EdgeInsets.only(top: 15.0),
             child: OutlinedButton(
               onPressed: () {
