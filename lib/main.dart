@@ -118,10 +118,10 @@ class LandingStaticContentContainer extends StatelessWidget {
     final headerStyle = theme.textTheme.displaySmall!.copyWith(
       color: theme.colorScheme.primaryFixedDim,
     );
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
       Text('what\'s your amdb?', style: headerStyle),
       Padding(
-          padding: const EdgeInsets.only(top: 10.0),
+          padding: bodyPadding,
           child: Text('not your mother\'s personality test. usefulness TBD.',
               style: (TextStyle(
                   color: theme.colorScheme.onPrimaryFixedVariant,

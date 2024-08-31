@@ -5,6 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:amdb/question_data.dart';
 import 'package:amdb/question.dart';
 
+const headerWidth = 700.0;
+const headerPadding = EdgeInsets.only(top: 20.0, bottom: 10.0, right: 50.0, left: 50.0);
+const bodyWidth = 600.0;
+const bodyPadding = EdgeInsets.only(right: 50.0, left: 50.0);
+
 class QuizQuestion extends StatefulWidget {
   @override
   State<QuizQuestion> createState() => _QuizQuestionState();
@@ -29,17 +34,12 @@ class _QuizQuestionState extends State<QuizQuestion> {
 
   Column getQuizQuestionFromData(
       AppState appState, ThemeData theme, QuestionData questionData) {
-    final headerStyle = theme.textTheme.displaySmall!
-        .copyWith(color: theme.colorScheme.primaryFixedDim);
     final questionStyle =
-        TextStyle(color: theme.colorScheme.onPrimaryFixedVariant, fontSize: 15);
+        TextStyle(color: theme.colorScheme.onPrimaryFixed, fontSize: 18);
     final radioSelectionStyle =
         TextStyle(color: theme.colorScheme.onPrimaryFixedVariant, fontSize: 15);
 
-    List<Widget> columnChildren = [Text("find your amdb", style: headerStyle)];
-    columnChildren.add(Padding(
-        padding: const EdgeInsets.only(top: 10.0),
-        child: Text(questionData.questionText, style: questionStyle)));
+    List<Widget> columnChildren = [];
 
     for (MultipleChoiceSelection selection in questionData.selections) {
       columnChildren.add(RadioListTile<Map<Category, double>>(
@@ -62,11 +62,18 @@ class _QuizQuestionState extends State<QuizQuestion> {
 
     // TODO: add animation for progress bar
     return Column(children: [
-      Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: columnChildren),
+      Container(
+        width: headerWidth,
+        padding: headerPadding,
+        child: Text(questionData.questionText, style: questionStyle)),
+      Container(
+        width: bodyWidth,
+        padding: bodyPadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: columnChildren)),
       Padding(
-          padding: EdgeInsets.only(top: 15.0),
+          padding: buttonPadding,
           child: OutlinedButton(
             onPressed: !isOptionSelected()
                 ? null
@@ -79,7 +86,7 @@ class _QuizQuestionState extends State<QuizQuestion> {
           )),
       Container(
           width: 180,
-          padding: EdgeInsets.only(top: 30.0),
+          padding: EdgeInsets.only(top: 20.0),
           child:
               LinearProgressIndicator(value: appState.getProgressPercentage()))
     ]);

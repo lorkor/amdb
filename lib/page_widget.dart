@@ -33,7 +33,7 @@ class _PageState extends State<AmdbPage> {
         children: [
           LandingStaticContentContainer(),
           Padding(
-            padding: EdgeInsets.only(top: 15.0),
+            padding: buttonPadding,
             child: OutlinedButton(
               onPressed: () {
                 appState.navigateToQuizPage();
@@ -66,7 +66,7 @@ class _PageState extends State<AmdbPage> {
               primaryMessage: primaryMessage,
               secondaryMessage: secondaryMessage),
           Padding(
-            padding: const EdgeInsets.only(top: 15.0),
+            padding: buttonPadding,
             child: OutlinedButton(
               onPressed: () {
                 appState.resetResult();
@@ -94,6 +94,6 @@ class AmdbBasePage extends StatelessWidget {
     return Scaffold(
         body: Padding(
             padding: EdgeInsets.all(10.0),
-            child: Align(alignment: Alignment.topLeft, child: pageContents)));
+            child: Align(alignment: Alignment.topCenter, child: pageContents)));
   }
 }
