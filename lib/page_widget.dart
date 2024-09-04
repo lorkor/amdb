@@ -2,6 +2,7 @@ import 'package:amdb/constants.dart';
 import 'package:amdb/main.dart';
 import 'package:amdb/question_widget.dart';
 import 'package:amdb/result_page_widget.dart';
+import 'package:amdb/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,9 +16,10 @@ class _PageState extends State<AmdbPage> {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
+    final theme = Theme.of(context);
     switch (appState.getCurrentPageId()) {
       case landingPageId:
-        return renderLandingPage(appState);
+        return renderLandingPage(appState, theme);
       case quizPageId:
         return renderQuizPage(appState);
       case resultPageId:
@@ -27,7 +29,7 @@ class _PageState extends State<AmdbPage> {
   }
 
   /* Renders the full landing page. */
-  AmdbBasePage renderLandingPage(AppState appState) {
+  AmdbBasePage renderLandingPage(AppState appState, ThemeData theme) {
     return AmdbBasePage(
       pageContents: Column(
         children: [
@@ -38,7 +40,7 @@ class _PageState extends State<AmdbPage> {
               onPressed: () {
                 appState.navigateToQuizPage();
               },
-              child: Text('find out now'),
+              child: Text('find out now', style: getBodyTextStyle(theme)),
             ),
           ),
         ],

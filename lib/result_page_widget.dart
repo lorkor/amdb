@@ -1,3 +1,5 @@
+import 'package:amdb/page_widget.dart';
+import 'package:amdb/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:amdb/constants.dart';
 
@@ -17,27 +19,23 @@ class AssessmentResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final headerStyle = theme.textTheme.displaySmall!.copyWith(
-      color: theme.colorScheme.primaryFixedDim,
-    );
+
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
       Container(
         alignment: Alignment.center,
         width: bodyWidth,
         padding: headerPadding,
-        child: Text(resultMessage, style: headerStyle)),
+        child: Text(resultMessage, style: getHeaderTextStyle(theme))),
       Container(
           width: bodyWidth,
           padding: resultBodyPadding,
           child: Text(primaryMessage,
-              style:
-                  TextStyle(color: theme.colorScheme.onPrimaryFixedVariant))),
+              style: getBodyTextStyle(theme))),
       Container(
           width: bodyWidth,
           padding: resultBodyPadding,
           child: Text(secondaryMessage,
-              style:
-                  TextStyle(color: theme.colorScheme.onPrimaryFixedVariant))),
+              style: getBodyTextStyle(theme))),
     ]);
   }
 }

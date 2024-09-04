@@ -1,5 +1,6 @@
 import 'package:amdb/constants.dart';
 import 'package:amdb/page_widget.dart';
+import 'package:amdb/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:amdb/question_data.dart';
@@ -84,7 +85,7 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Category getCategoryWithMax(Category? ignoreCategory) {  
+  Category getCategoryWithMax(Category? ignoreCategory) {
     var maxValue = 0.0;
     var bestCategory = Category.unknown;
 
@@ -115,17 +116,13 @@ class LandingStaticContentContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final headerStyle = theme.textTheme.displaySmall!.copyWith(
-      color: theme.colorScheme.primaryFixedDim,
-    );
+
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      Text('what\'s your amdb?', style: headerStyle),
+      Text('what\'s your amdb?', style: getHeaderTextStyle(theme)),
       Padding(
           padding: bodyPadding,
           child: Text('not your mother\'s personality test. usefulness TBD.',
-              style: (TextStyle(
-                  color: theme.colorScheme.onPrimaryFixedVariant,
-                  fontSize: 15)))),
+              style: (getBodyTextStyle(theme)))),
     ]);
   }
 }
