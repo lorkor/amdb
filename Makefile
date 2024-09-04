@@ -1,4 +1,6 @@
-# Makefile for deploying the Flutter web projects to GitHub
+# Makefile for deploying the Flutter web projects to GitHub.
+# To deploy:
+# run `make deploy OUTPUT=amdb-web`
 
 BASE_HREF = /$(OUTPUT)/
 GITHUB_USER = lorkor

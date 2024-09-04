@@ -92,8 +92,8 @@ class AmdbBasePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Align(alignment: Alignment.topCenter, child: pageContents)));
+        body: ListView(padding: EdgeInsets.all(25.0), children: <Widget>[
+      Align(alignment: Alignment.topCenter, child: pageContents)
+    ]));
   }
 }
