@@ -1,4 +1,3 @@
-import 'package:amdb/page_widget.dart';
 import 'package:amdb/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:amdb/constants.dart';

@@ -7,10 +7,7 @@ import 'package:amdb/question_data.dart';
 import 'package:amdb/question.dart';
 
 const headerWidth = 700.0;
-const headerPadding =
-    EdgeInsets.only(top: 20.0, bottom: 10.0, right: 50.0, left: 50.0);
 const bodyWidth = 600.0;
-const bodyPadding = EdgeInsets.only(right: 50.0, left: 50.0);
 
 class QuizQuestion extends StatefulWidget {
   @override
@@ -66,7 +63,7 @@ class _QuizQuestionState extends State<QuizQuestion> {
               style: getQuestionTextStyle(theme))),
       Container(
           width: bodyWidth,
-          padding: bodyPadding,
+          padding: questionBodyPadding,
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: columnChildren)),
@@ -84,7 +81,7 @@ class _QuizQuestionState extends State<QuizQuestion> {
           )),
       Container(
           width: 180,
-          padding: EdgeInsets.only(top: 20.0),
+          padding: buttonPadding,
           child:
               LinearProgressIndicator(value: appState.getProgressPercentage()))
     ]);

@@ -92,7 +92,7 @@ class AppState extends ChangeNotifier {
     for (MapEntry<Category, double> categoryResult in results.entries) {
       var score = categoryResult.value;
       var category = categoryResult.key;
-      if (score > maxValue && category != ignoreCategory) {
+      if (score >= maxValue && category != ignoreCategory) {
         maxValue = score;
         bestCategory = category;
       }

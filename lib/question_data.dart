@@ -33,7 +33,7 @@ final quizContent = [
             'you ask if anyone needs help with planning logistics',
             {Category.amoeba: 1.0})
       ]),
-      QuestionData(
+  QuestionData(
       'you have guests visiting you from out of town. what\'s your hosting style?',
       [
         MultipleChoiceSelection(
@@ -47,6 +47,22 @@ final quizContent = [
             {Category.mommy: 1.0}),
         MultipleChoiceSelection(
             'play by ear, you\'ll figure things out when they arrive',
+            {Category.amoeba: 1.0})
+      ]),
+      QuestionData(
+      'you\'re planning a camping trip with friends and are tasked with contributoring something to share for dinner. what do you bring?',
+      [
+        MultipleChoiceSelection(
+            'a bagged salad. healthy and quick!',
+            {Category.baby: 1.0}),
+        MultipleChoiceSelection(
+            'ingredients from the farmers market; this is the perfect opportunity to try a new recipe',
+            {Category.mommy: 1.0}),
+        MultipleChoiceSelection(
+            'coals for setting up the grill',
+            {Category.daddy: 1.0}),
+        MultipleChoiceSelection(
+            'stop at a grocery store en route and grab something that looks yummy',
             {Category.amoeba: 1.0})
       ]),
 ];
