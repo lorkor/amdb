@@ -118,7 +118,9 @@ class LandingStaticContentContainer extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      Text('what\'s your amdb?', style: getHeaderTextStyle(theme)),
+      Padding(
+          padding: headerPadding,
+          child: Text('what\'s your amdb?', style: getHeaderTextStyle(theme))),
       Padding(
           padding: bodyPadding,
           child: Text('not your mother\'s personality test. usefulness TBD.',

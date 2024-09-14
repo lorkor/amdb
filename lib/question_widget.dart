@@ -7,7 +7,7 @@ import 'package:amdb/question_data.dart';
 import 'package:amdb/question.dart';
 
 const headerWidth = 700.0;
-const bodyWidth = 600.0;
+const bodyWidth = 675.0;
 
 class QuizQuestion extends StatefulWidget {
   @override

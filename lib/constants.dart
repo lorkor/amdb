@@ -9,12 +9,12 @@ const resultPageId = 'result';
 
 // Styling Constants.
 const headerWidth = 700.0;
-const headerPadding = EdgeInsets.only(top: 20.0, bottom: 10.0, right: 20.0, left: 20.0);
+const headerPadding = EdgeInsets.only(top: 20.0, bottom: 10.0, right: 25.0, left: 25.0);
 
 const bodyWidth = 600.0;
-const bodyPadding = EdgeInsets.only(top:10.0, right: 20.0, left: 20.0);
-const questionBodyPadding = EdgeInsets.only(right: 20.0, left: 20.0);
-const resultBodyPadding = EdgeInsets.only(top:20.0, right: 20.0, left: 20.0);
+const bodyPadding = EdgeInsets.only(top:10.0, right: 25.0, left: 25.0);
+const questionBodyPadding = EdgeInsets.only(right: 25.0, left: 25.0);
+const resultBodyPadding = EdgeInsets.only(top:20.0, right: 25.0, left: 25.0);
 const buttonPadding = EdgeInsets.only(top:20.0);
 
 // Data constants.
